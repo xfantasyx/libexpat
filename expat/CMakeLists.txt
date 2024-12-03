@@ -524,6 +524,10 @@ expat_install(TARGETS expat EXPORT expat
 
 expat_install(FILES lib/expat.h lib/expat_external.h DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
+if(EXPAT_SHARED_LIBS AND WIN32)
+expat_install(FILES $<TARGET_PDB_FILE:expat> DESTINATION ${CMAKE_INSTALL_BINDIR} OPTIONAL)
+endif()
+
 #
 # pkg-config file
 #
@@ -850,7 +854,7 @@ configure_package_config_file(
         cmake/expat-config.cmake.in
         cmake/expat-config.cmake
     INSTALL_DESTINATION
-        ${CMAKE_INSTALL_LIBDIR}/cmake/expat-${PROJECT_VERSION}/
+        cmake
 )
 write_basic_package_version_file(
     cmake/expat-config-version.cmake
@@ -867,13 +871,13 @@ expat_install(
         ${CMAKE_CURRENT_BINARY_DIR}/cmake/expat-config.cmake
         ${CMAKE_CURRENT_BINARY_DIR}/cmake/expat-config-version.cmake
     DESTINATION
-        ${CMAKE_INSTALL_LIBDIR}/cmake/expat-${PROJECT_VERSION}/
+       cmake
 )
 expat_install(
     EXPORT
         expat
     DESTINATION
-        ${CMAKE_INSTALL_LIBDIR}/cmake/expat-${PROJECT_VERSION}/
+        cmake
     NAMESPACE
         expat::
 )
